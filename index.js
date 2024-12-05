@@ -187,11 +187,10 @@ const server = http.createServer(async (request, response) => {
                     let getresult;
                     try{
                         getresult = await fetchapi(`api/v1/videos/${v}?hl=ja`);
-                        outform = JSON.stringify(JSON.parse(getresult).formats);
                     } catch(e) {
                         getresult = {};
                     }
-                    message = returnTemplate("./templates/watch.html", {formats: outform});
+                    message = returnTemplate("./templates/watch.html", {formats: JSON.stringify(getresult)});
                 }
                 break;
             case "/keiji.html":
