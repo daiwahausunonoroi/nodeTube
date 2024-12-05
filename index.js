@@ -7,7 +7,7 @@ const ytdlpPath = "./yt-dlp";
 execSync("chmod 755 ./yt-dlp");
 
 const invidiousjson = "https://api.invidious.io/instances.json?pretty=1&sort_by=type,users";
-let apis = ["https://invidious.private.coffee/","https://invidious.protokolla.fi/",
+let apis = ["https://inv.nadeko.net/", "https://invidious.private.coffee/","https://invidious.protokolla.fi/",
     "https://invidious.perennialte.ch/","https://yt.cdaut.de/","https://invidious.materialio.us/",
     "https://yewtu.be/","https://invidious.fdn.fr/","https://inv.tux.pizza/",
     "https://invidious.privacyredirect.com/","https://invidious.drgns.space/","https://vid.puffyan.us",
@@ -221,7 +221,7 @@ async function fetchapi(urls){
         async function fetchCore(url) {
             let option = {};
             const controller = new AbortController();
-            const timeout = setTimeout(() => { controller.abort() }, option.timeout || 5000); //5s
+            const timeout = setTimeout(() => { controller.abort() }, option.timeout || 10000); //10s
             try {
                 const response = await fetch(url, {
                     signal: controller.signal // for timeout
