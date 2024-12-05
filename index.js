@@ -185,7 +185,7 @@ const server = http.createServer(async (request, response) => {
                     });
                     let v = urls.searchParams.get("v").replace(".", "").replace("/", "").replace("&", "").replace("?", "").replace("|", "").replace("(", "").replace(")", "");
                     let getresult = await fetchapi(`api/v1/videos/${v}?hl=ja`);
-                    message = returnTemplate("./templates/watch.html", {downdata: JSON.stringify(getresult)});
+                    message = returnTemplate("./templates/watch.html", {downdata: getresult});
                 }
                 break;
             case "/keiji.html":
