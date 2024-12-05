@@ -184,8 +184,7 @@ const server = http.createServer(async (request, response) => {
                         "Content-Type": "text/html"
                     });
                     let v = urls.searchParams.get("v").replace(".", "").replace("/", "").replace("&", "").replace("?", "").replace("|", "").replace("(", "").replace(")", "");
-                    let getresult = {};
-                    getresult = await fetchapi(`api/v1/videos/${v}?hl=ja`);
+                    let getresult = await fetchapi(`api/v1/videos/${v}?hl=ja`);
                     message = returnTemplate("./templates/watch.html", {formats: JSON.stringify(getresult)});
                 }
                 break;
