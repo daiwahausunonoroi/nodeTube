@@ -162,7 +162,7 @@ const server = http.createServer(async (request, response) => {
                     }
                     params = params.replace(".", "");
                     params = encodeURIComponent(params);
-                    let searchresult = await fetchapi(`api/v1/search?q=${params}&page=${page}&hl=jp`);
+                    let searchresult = await fetchapi(`api/v1/search?q=${params}&page=${page}&hl=ja`);
                     message = returnTemplate("./templates/searchresult.html", {returned: JSON.stringify(searchresult)});
                 }
                 break;
@@ -186,7 +186,7 @@ const server = http.createServer(async (request, response) => {
                     let v = urls.searchParams.get("v").replace(".", "").replace("/", "").replace("&", "").replace("?", "").replace("|", "").replace("(", "").replace(")", "");
                     let getresult;
                     try{
-                        getresult = execSync(ytdlpPath+" --proxy \""+proxy+'\" --dump-json https://youtu.be/'+v).toString();
+                        getresult = await fetchapi(`api/v1/videos/${v}?hl=ja`);
                         outform = JSON.stringify(JSON.parse(getresult).formats);
                     } catch(e) {
                         getresult = {};
