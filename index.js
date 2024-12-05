@@ -221,7 +221,7 @@ async function fetchapi(urls){
         async function fetchCore(url) {
             let option = {};
             const controller = new AbortController();
-            const timeout = setTimeout(() => { controller.abort() }, option.timeout || 15000); //15s
+            const timeout = setTimeout(() => { controller.abort() }, option.timeout || 5000); //5s
             try {
                 const response = await fetch(url, {
                     signal: controller.signal // for timeout
