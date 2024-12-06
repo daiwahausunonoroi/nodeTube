@@ -110,7 +110,7 @@
     var playb;
     function readcookie(){
         if (d.cookie.indexOf("quality") == -1) return;
-        d.cookie.split(";")["quality"].split(",").forEach((c, s) => {
+        d.cookie.split(";").find((e) => e.indexOf("quality") != -1).split("=")[1].split(",").forEach((c, s) => {
             if (s == 0){
                 videoformats.find((search) => search == c) != -1 ? vq.value = c : null;
             } else if (s == 1){
