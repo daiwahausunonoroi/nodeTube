@@ -2,12 +2,9 @@ const http = require("http");
 const Handlebars = require("handlebars");
 const file = require("fs");
 const AbortController = require('abort-controller');
-const { execSync } = require("child_process");
-const ytdlpPath = "./yt-dlp";
-execSync("chmod 755 ./yt-dlp");
 
 const invidiousjson = "https://api.invidious.io/instances.json?pretty=1&sort_by=type,users";
-let apis = ["https://invidious.private.coffee/","https://invidious.protokolla.fi/",
+let apis = ["https://inv.nadeko.net/", "https://invidious.private.coffee/","https://invidious.protokolla.fi/",
     "https://invidious.perennialte.ch/","https://yt.cdaut.de/","https://invidious.materialio.us/",
     "https://yewtu.be/","https://invidious.fdn.fr/","https://inv.tux.pizza/",
     "https://invidious.privacyredirect.com/","https://invidious.drgns.space/","https://vid.puffyan.us",
@@ -25,14 +22,6 @@ let apis = ["https://invidious.private.coffee/","https://invidious.protokolla.fi
                 apis.push("https://"+d[count][0]+"/");
             }
         });
-    })
-    .catch((e) => {console.error(e)});
-    let proxy = "socks4://88.210.37.186:40064";
-    let proxygeturl = "https://raw.githubusercontent.com/JF6DEU/nodeTube/refs/heads/main/proxy.json";
-    fetch(proxygeturl)
-    .then(r => r.json())
-    .then((d) => {
-        proxy = d.proxy;
     })
     .catch((e) => {console.error(e)});
 
@@ -162,17 +151,11 @@ const server = http.createServer(async (request, response) => {
                     }
                     params = params.replace(".", "");
                     params = encodeURIComponent(params);
-                    let searchresult = await fetchapi(`api/v1/search?q=${params}&page=${page}&hl=jp`);
+                    let searchresult = await fetchapi(`api/v1/search?q=${params}&page=${page}`);
                     message = returnTemplate("./templates/searchresult.html", {returned: JSON.stringify(searchresult)});
                 }
                 break;
             case "/watch":
-                fetch(proxygeturl)
-                .then(r => r.json())
-                .then((d) => {
-                    proxy = d.proxy;
-                })
-                .catch((e) => {console.error(e)});
                 if (urls.searchParams.get("v") == null || urls.searchParams.get("v").length >= 50){
                     response.writeHead(207, {
                         "Content-Type": "text/html"
@@ -184,14 +167,8 @@ const server = http.createServer(async (request, response) => {
                         "Content-Type": "text/html"
                     });
                     let v = urls.searchParams.get("v").replace(".", "").replace("/", "").replace("&", "").replace("?", "").replace("|", "").replace("(", "").replace(")", "");
-                    let getresult;
-                    try{
-                        getresult = execSync(ytdlpPath+" --proxy \""+proxy+'\" --dump-json https://youtu.be/'+v).toString();
-                        outform = JSON.stringify(JSON.parse(getresult).formats);
-                    } catch(e) {
-                        getresult = {};
-                    }
-                    message = returnTemplate("./templates/watch.html", {formats: outform});
+                    let getresult = await fetchapi(`api/v1/videos/${v}`);
+                    message = returnTemplate("./templates/watch.html", {downdata: JSON.stringify(getresult)});
                 }
                 break;
             case "/keiji.html":
