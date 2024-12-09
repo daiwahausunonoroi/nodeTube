@@ -16,9 +16,13 @@
 
 # デプロイ方法
 
-いまのところrenderしか対応してないけど
+~~いまのところrenderしか対応してないけど~~Koyebにも対応しました。
 
 [ここ](http://render.com/deploy?repo=https://github.com/JF6DEU/nodeTube/)からデプロイできるよ。(事前にrenderアカウント作成必須)
+
+[![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?name=nodetube&repository=JF6DEU%2FnodeTube&branch=main&builder=dockerfile&instance_type=free&regions=was&ports=4338%3Bhttp%3B%2F&hc_protocol%5B4338%5D=tcp&hc_grace_period%5B4338%5D=5&hc_interval%5B4338%5D=30&hc_restart_limit%5B4338%5D=3&hc_timeout%5B4338%5D=5&hc_path%5B4338%5D=%2F&hc_method%5B4338%5D=get)
+
+# その他
 
 先生モードとしてバックグラウンド再生はできないよ。
 
